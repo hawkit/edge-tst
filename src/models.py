@@ -154,6 +154,9 @@ class EdgeModel(BaseModel):
             gen_loss.backward()
         self.gen_optimizer.step()
 
+    def remove_spectralnorm(self):
+        self.generator.remove_spectralnorm()
+
     def export(self):
         dummy_input = Variable(torch.randn(1, 3, 1280, 720))
         torch.onnx.export(self.generator, dummy_input, "edge.onnx", operator_export_type=torch.onnx.OperatorExportTypes.ONNX_ATEN_FALLBACK, verbose=True)
